@@ -1,8 +1,10 @@
 name: Download and push folder to repository
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
+# schedule:
+  # - cron: '0 0 * * *'
+  # If you want to get the source of the translation on a regular basis, uncomment the two lines above
+  # This will make this CI work once a day
     
 jobs:
   download_and_push:
