@@ -5,7 +5,7 @@ import shutil
 from collections import defaultdict
 
 json_folder = './template/lang'
-extensions_folder = './template/source/lang/extensions'
+extensions_folder = './template/source/extensions'
 merged_file = './localizations/lang.json'
 report_file = './tools/merge_report.txt'
 
