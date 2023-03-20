@@ -4,9 +4,10 @@ import glob
 import shutil
 from collections import defaultdict
 
-json_folder = './template/lang'
-extensions_folder = './template/source/extensions'
-merged_file = './localizations/lang.json'
+json_folder = './template/<__lang__>'
+extensions_folder = './template/<__lang__>/extensions'
+merged_file = './localizations/<__lang__>.json'
+stable_diffusion_file = './template/<__lang__>\\StableDiffusion.json'
 report_file = './tools/merge_report.txt'
 
 
@@ -17,7 +18,6 @@ def merge_json_files():
         json_files += glob.glob(os.path.join(extensions_folder, '*.json'))
 
     # Put StableDiffusion.json as the first element in the list
-    stable_diffusion_file = './template/StableDiffusion.json'
     if stable_diffusion_file in json_files:
         json_files.remove(stable_diffusion_file)
         json_files.insert(0, stable_diffusion_file)
@@ -40,8 +40,13 @@ def merge_json_files():
                     merged[key] = data[key]
 
     # Write merged JSON file
-    with open(merged_file, 'w', encoding='utf-8') as f:
-        json.dump(merged, f, ensure_ascii=False, indent=4)
+    merged_file_dir = os.path.dirname(merged_file)
+    if not os.path.exists(merged_file_dir):
+        os.makedirs(merged_file_dir)
+
+    if not os.path.exists(merged_file):
+        with open(merged_file, 'w', encoding='utf-8') as f:
+            json.dump(merged, f, ensure_ascii=False, indent=2)
 
     # Write report file
     with open(report_file, 'w', encoding='utf-8') as f:
